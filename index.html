@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dropout Shop — Premium Vape & Accessories</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-body: #0f1115;
+      --glass: rgba(255, 255, 255, 0.03);
+      --border: rgba(255, 255, 255, 0.1);
+      --text: #ffffff;
+      --muted: #a1a6b4;
+      --accent: #ec4899;
+      --accent-hover: #fb71ad;
+      --highlight: #8b5cf6;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-body);
+      color: var(--text);
+      line-height: 1.5;
+    }
+    a { text-decoration: none; color: inherit; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+
+    /* Header */
+    header {
+      position: sticky; top: 0; z-index: 1000;
+      padding: 1rem 0;
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    nav { display: flex; justify-content: space-between; align-items: center; }
+    .logo {
+      font-weight: 700; letter-spacing: -0.02em;
+      font-size: 1.3rem; color: var(--accent); cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .logo:hover { opacity: 0.8; }
+    .nav-links a {
+      margin-left: 2rem; font-size: 0.95rem; color: var(--muted);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* Hero */
+    .hero {
+      padding: 6rem 0; text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .hero h1 {
+      font-size: clamp(2.5rem, 8vw, 5rem);
+      font-weight: 800; line-height: 1;
+      margin-bottom: 1rem;
+      background: linear-gradient(to right, #fff, #a1a6b4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero p {
+      max-width: 600px;
+      margin: 0 auto 3rem auto;
+      color: var(--muted); font-size: 1.1rem;
+    }
+    .open-badge {
+      display: inline-block;
+      background: rgba(139, 92, 246, 0.15);
+      border: 1px solid rgba(139, 92, 246, 0.3);
+      color: var(--highlight);
+      padding: 0.75rem 1.5rem;
+      border-radius: 50px;
+      font-weight: 600; letter-spacing: 0.05em;
+      margin-bottom: 2.5rem;
+      backdrop-filter: blur(4px);
+    }
+    .cta-btn {
+      background: var(--accent); color: white;
+      padding: 1rem 2.5rem; border-radius: 12px;
+      font-weight: 600; box-shadow: 0 4px 20px rgba(236, 72, 153, 0.4);
+      transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+    }
+    .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(236, 72, 153, 0.6);
+      background: var(--accent-hover);
+    }
+
+    /* Sections */
+    section { padding: 4rem 0; }
+    h2 {
+      text-align: center; font-size: 2.2rem;
+      margin-bottom: 3rem; font-weight: 700;
+    }
+
+    /* Grid & Cards */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 2.5rem;
+    }
+    .card {
+      background: var(--glass);
+      border: 1px solid var(--border);
+      border-radius: 16px; padding: 1.75rem;
+      transition: all 0.3s ease; position: relative;
+      overflow: hidden;
+    }
+    .card:hover {
+      border-color: rgba(255,255,255,0.2);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.35);
+    }
+    .card h3 { font-size: 1.25rem; margin-bottom: 0.5rem; font-weight: 600; }
+    .price { color: var(--accent); font-weight: 700; font-size: 1.15rem; margin-bottom: 1rem; }
+    .stock-status {
+      font-size: 0.85rem; color: var(--muted);
+      margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;
+    }
+    .dot { height: 8px; width: 8px; border-radius: 50%; background: var(--muted); display: inline-block; }
+    .dot.in-stock { background: #22c55e; }
+    .book-btn {
+      width: 100%; padding: 0.875rem;
+      background: rgba(255,255,255,0.08); border: 1px solid var(--border);
+      color: white; border-radius: 8px; cursor: pointer; font-weight: 500;
+      transition: all 0.2s;
+    }
+    .book-btn:hover { background: white; color: var(--bg-body); border-color: white; }
+
+    /* Table — Наличие */
+    .table-wrapper {
+      overflow-x: auto; border-radius: 16px;
+      border: 1px solid var(--border);
+      background: var(--glass);
+    }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 1rem; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    th { color: var(--muted); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.05em; }
+    tr:last-child td { border-bottom: none; }
+    .status-badge {
+      padding: 0.3rem 0.8rem; border-radius: 99px;
+      font-size: 0.75rem; font-weight: 600; color: white;
+    }
+    .status-in { background: rgba(34, 197, 94, 0.2); color: #22c55e; border: 1px solid rgba(34,197,94,0.4); }
+    .status-low { background: rgba(245, 158, 11, 0.2); color: #f59e0b; border: 1px solid rgba(245,158,11,0.4); }
+    .status-out { background: rgba(239, 68, 68, 0.2); color: #ef4444; border: 1px solid rgba(239,68,68,0.4); }
+
+    /* About / Delivery */
+    .feature-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
+    }
+    .feature-item {
+      background: var(--glass); padding: 2rem;
+      border-radius: 16px; border: 1px solid var(--border);
+    }
+    .feature-title {
+      font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--accent);
+    }
+
+    /* Footer */
+    footer {
+      background: #05060a; padding: 3rem 0; border-top: 1px solid var(--border); text-align: center;
+    }
+    .footer-content {
+      display: flex; flex-direction: column; gap: 1.5rem; max-width: 600px; margin: 0 auto;
+    }
+    .tg-link {
+      display: inline-flex; align-items: center; justify-content: center;
+      gap: 0.75rem; background: #0088cc; color: white;
+      padding: 1rem 2rem; border-radius: 12px; font-weight: 600; width: fit-content; margin: 0 auto;
+    }
+    .age-warning {
+      margin-top: 2rem; font-size: 0.8rem; color: var(--muted); text-align: center;
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 3.2rem; }
+      .feature-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <nav>
+        <div class="logo" id="home-trigger">DROP OUT</div>
+        <div class="nav-links">
+          <a href="#about">О нас</a>
+          <a href="#availability">Наличие</a>
+          <a href="#prices">Цены</a>
+          <a href="#delivery">Самовывоз</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container">
+        <h1>Твой стиль.<br>Твой вайб.</h1>
+        <p>Dropout Shop — премиальный подбор устройств и расходников. Только проверенные бренды, честные остатки и бронь перед самовывозом.</p>
+        <span class="open-badge">Открытие: 15 октября 2024, Хабаровск</span>
+        <button class="cta-btn" onclick="document.getElementById('availability').scrollIntoView({behavior:'smooth'})">Смотреть наличие</button>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <div class="container">
+        <h2>Кто мы такие</h2>
+        <div class="feature-grid">
+          <div class="feature-item">
+            <div class="feature-title">Честные остатки</div>
+            <p style="color:var(--muted)">Мы не скрываем, сколько товара осталось. В реальном времени показываем наличие и позволяем забронировать позицию до визита.</p>
+          </div>
+          <div class="feature-item">
+            <div class="feature-title">Только проверенные бренды</div>
+            <p style="color:var(--muted)">Работаем с официальными поставщиками. Каждая партия проходит проверку на оригинальность и целостность упаковки.</p>
+          </div>
+          <div class="feature-item">
+            <div class="feature-title">Хабаровск — наш дом</div>
+            <p style="color:var(--muted)">Товар едет из Москвы, но мы здесь, чтобы ты мог забрать его быстро и удобно. Никакой долгой доставки — только самовывоз с проверкой возраста.</p>
+          </div>
+          <div class="feature-item">
+            <div class="feature-title">Прозрачные цены</div>
+            <p style="color:var(--muted)">Никаких скрытых наценок. Цена на сайте = цена при получении. Оплата строго при самовывозе.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- НАЛИЧИЕ (ТАБЛИЦА) -->
+    <section id="availability">
+      <div class="container">
+        <h2>Наличие</h2>
+        <p style="text-align:center; color:var(--muted); margin-bottom:2rem;">
+          Здесь — актуальные остатки. Если позиция «Мало» — бронируй сразу. Если «Нет» — скоро будет.
+        </p>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Товар</th>
+                <th>Категория</th>
+                <th>Цена</th>
+                <th>Остаток</th>
+                <th>Действие</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Жидкости -->
+              <tr>
+                <td>Подонки V2</td>
+                <td>Жидкость</td>
+                <td>350 ₽</td>
+                <td><span class="status-badge status-in">Много</span></td>
+                <td><button class="book-btn">Забронировать</button></td>
+              </tr>
+              <tr>
+                <td>Брызги (BZ)</td>
+                <td>Жидкость</td>
+                <td>350 ₽</td>
+                <td><span class="status-badge status-low">Мало</span></td>
+                <td><button class="book-btn">Забронировать</button></td>
+              </tr>
+              <tr>
+                <td>Подонки Blood</td>
+                <td>Жидкость</td>
+                <td>350 ₽</td>
+                <td><span class="status-badge status-in">Много</span></td>
+                <td><button class="book-btn">Забронировать</button></td>
+              </tr>
+              <tr>
+                <td>Подонки Podgon</td>
+                <td>Жидкость</td>
+                <td>350 ₽</td>
+                <td><span class="status-badge status-in">Много</span></td>
+                <td><button class="book-btn">Забронировать</button></td>
+              </tr>
+
+              <!-- Подики -->
+              <tr>
+                <td>XROS 6</td>
+                <td>Подик</td>
+                <td>2 500 ₽</td>
+                <td><span class="status-badge status-in">Много</span></td>
+                <td><button class="book-btn">Забронировать</button></td>
+              </tr>
+              <tr>
+                <td>Aegis Hero 5</td>
+                <td>Подик</td>
+                <td>3 000 ₽</td>
+                <td><span class="status-badge status-low">Мало</span></td>
+                <td><button class="book-btn">Забронировать</button></td>
+              </tr>
+
+              <!-- Испарители и картриджи (заглушка с ценой) -->
+              <tr>
+                <td>Испаритель Mesh 0.6Ω</td>
+                <td>Испаритель</td>
+                <td>350 ₽</td>
+                <td><span class="status-badge status-in">Много</span></td>
+                <td><button class
+
+
